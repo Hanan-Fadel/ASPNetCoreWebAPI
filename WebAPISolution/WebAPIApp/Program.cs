@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebAPIApp.Data;
+using WebAPIApp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,13 @@ builder.Services.AddDbContext<WebAPIDbContext>(options =>
     //get the connection string from the configuration file appsettings.json using builder.Configuration.GetConnectionString
     options.UseSqlServer(builder.Configuration.GetConnectionString("WalksDbConn"));
 });
+
+//whenever I ask for the IRegionRepositlry, give me the implemenation for RegionRepository 
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+//Inject Automapper, when the applocation starts, the automapper will scan the assembly for the app and look
+//for all profiles that we have and then use these maps to map data.
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
