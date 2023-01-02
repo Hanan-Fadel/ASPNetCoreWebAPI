@@ -16,14 +16,63 @@ namespace WebAPIApp.Repositories
         }
 
         //Use async 
-        public async Task<IEnumerable<Region>> GetAllRegionsAsync()
+        public async Task<IEnumerable<Region>> GetAllAsync()
         {
             return await webAPIDbContext.Regions.ToListAsync();
         }
 
-        /* public IEnumerable<Region> GetAllRegions()
-         {
-             return webAPIDbContext.Regions.ToList();
-         }*/
+        public async Task<Region> GetAsync(Guid Id)
+        {
+            return await webAPIDbContext.Regions.FirstOrDefaultAsync(x => x.Id == Id);
+        }
+
+        public async Task<Region> AddAsync(Region region)
+        {
+            region.Id = Guid.NewGuid();
+            await webAPIDbContext.AddAsync(region);
+            await webAPIDbContext.SaveChangesAsync();
+            return region;
+        }
+
+
+        public async Task<Region> DeleteAsync(Guid Id)
+        {
+            var region = await webAPIDbContext.Regions.FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (region == null)
+            {
+                return null;
+            }
+
+            //Delete the region from the database
+            webAPIDbContext.Regions.Remove(region);
+
+            //Save the changes to the database
+            await webAPIDbContext.SaveChangesAsync();
+
+            return region;
+        }
+
+        public async Task<Region> UpdateAsync(Guid Id, Region region)
+        {
+            var existingRegion = await webAPIDbContext.Regions.FirstOrDefaultAsync(x => x.Id == Id );
+
+            if (existingRegion == null)
+            {
+                return null;
+            }
+
+            existingRegion.Code = region.Code;
+            existingRegion.Name = region.Name;
+            existingRegion.Area = region.Area;
+            existingRegion.Lat = region.Lat;
+            existingRegion.Long= region.Long;
+            existingRegion.Population = region.Population;
+
+            await webAPIDbContext.SaveChangesAsync();
+
+            return existingRegion;
+
+        }
     }
 }
