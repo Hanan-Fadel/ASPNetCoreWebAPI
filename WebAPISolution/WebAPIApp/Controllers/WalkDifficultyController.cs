@@ -46,6 +46,11 @@ namespace WebAPIApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddWalkDifficulty(Models.DTO.AddWalkDifficultyRequest addWalkDifficultyRequest) 
         {
+            //validate the incoming request
+            if (!ValidateAddWalkDifficultyAsync(addWalkDifficultyRequest))
+            {
+                return BadRequest(ModelState);
+            }
             //convert from DTO model to domain model
             var walkDifficultyDomain = new Models.Domain.WalkDifficulty
             {
@@ -69,6 +74,11 @@ namespace WebAPIApp.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateWalkDifficulty([FromRoute] Guid id, [FromBody] Models.DTO.UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
+            //validate the incoming request
+            if(!ValidateUpdateWalkDifficultyAsync(updateWalkDifficultyRequest))
+            {
+                return BadRequest(ModelState);
+            }
             //convert from DTO to Domain
             var exisityWalkDifficulty = new Models.Domain.WalkDifficulty
             {
@@ -114,6 +124,43 @@ namespace WebAPIApp.Controllers
             // Send the response back 
             return Ok(walkDifficultyDTO);
         }
+
+        #region private methods
+        private bool ValidateAddWalkDifficultyAsync(Models.DTO.AddWalkDifficultyRequest addWalkDifficultyRequest) 
+        {
+            if (addWalkDifficultyRequest == null)
+            {
+                ModelState.AddModelError(nameof(addWalkDifficultyRequest), $"{nameof(addWalkDifficultyRequest)} is required.");
+                return false;
+            }
+
+            if(string.IsNullOrWhiteSpace(addWalkDifficultyRequest.Code))
+            {
+                ModelState.AddModelError(nameof(addWalkDifficultyRequest.Code), $"{nameof(addWalkDifficultyRequest.Code)} is required.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateUpdateWalkDifficultyAsync(Models.DTO.UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
+        {
+            if (updateWalkDifficultyRequest == null)
+            {
+                ModelState.AddModelError(nameof(updateWalkDifficultyRequest), $"{nameof(updateWalkDifficultyRequest)} is required.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(updateWalkDifficultyRequest.Code))
+            {
+                ModelState.AddModelError(nameof(updateWalkDifficultyRequest.Code), $"{nameof(updateWalkDifficultyRequest.Code)} is required.");
+                return false;
+            }
+
+            return true;
+        }
+        
+        #endregion
 
     }
 }
