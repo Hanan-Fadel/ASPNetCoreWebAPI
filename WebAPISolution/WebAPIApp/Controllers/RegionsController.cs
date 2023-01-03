@@ -202,15 +202,15 @@ namespace WebAPIApp.Controllers
                         
             }
             
-            if (addRegionRequest.Lat <=0 )
+            if (addRegionRequest.Lat ==0 )
             {
-                ModelState.AddModelError(nameof(addRegionRequest.Lat), $"{nameof(addRegionRequest.Lat)} cannot be less than or equal to Zero");
+                ModelState.AddModelError(nameof(addRegionRequest.Lat), $"{nameof(addRegionRequest.Lat)} cannot be equal to Zero");
                         
             }  
             
-            if (addRegionRequest.Long <=0 )
+            if (addRegionRequest.Long ==0 )
             {
-                ModelState.AddModelError(nameof(addRegionRequest.Long), $"{nameof(addRegionRequest.Long)} cannot be less than or equal to Zero");
+                ModelState.AddModelError(nameof(addRegionRequest.Long), $"{nameof(addRegionRequest.Long)} cannot be equal Zero");
                         
             } 
             
@@ -256,17 +256,19 @@ namespace WebAPIApp.Controllers
 
             }
 
-            if (updateRegionRequest.Lat <= 0)
+
+            if (updateRegionRequest.Lat == 0)
             {
-                ModelState.AddModelError(nameof(updateRegionRequest.Lat), $"{nameof(updateRegionRequest.Lat)} cannot be less than or equal to Zero");
+                ModelState.AddModelError(nameof(updateRegionRequest.Lat), $"{nameof(updateRegionRequest.Lat)} cannot be equal to Zero");
 
             }
 
-            if (updateRegionRequest.Long <= 0)
+            if (updateRegionRequest.Long == 0)
             {
-                ModelState.AddModelError(nameof(updateRegionRequest.Long), $"{nameof(updateRegionRequest.Long)} cannot be less than or equal to Zero");
+                ModelState.AddModelError(nameof(updateRegionRequest.Long), $"{nameof(updateRegionRequest.Long)} cannot be equal Zero");
 
             }
+
 
             if (updateRegionRequest.Population < 0)
             {
