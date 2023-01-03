@@ -21,6 +21,9 @@ builder.Services.AddDbContext<WebAPIDbContext>(options =>
 //whenever I ask for the IRegionRepositlry, give me the implemenation for RegionRepository 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 
+//Add the WalkRepository so that it can be used by the controller
+builder.Services.AddScoped<IWalkRepository, WalkRepository>();
+
 //Inject Automapper, when the applocation starts, the automapper will scan the assembly for the app and look
 //for all profiles that we have and then use these maps to map data.
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
