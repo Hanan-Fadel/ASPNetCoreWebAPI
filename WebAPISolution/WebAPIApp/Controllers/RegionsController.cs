@@ -23,7 +23,7 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetAllRegionsAsync()
         {
             //use the private field to get all the regions from the database
@@ -55,6 +55,7 @@ namespace WebAPIApp.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetRegionAsync")]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetRegionAsync(Guid id)
         {
             var region = await regionRepository.GetAsync(id);
@@ -68,7 +69,7 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles ="writer")]
         public async Task<IActionResult> AddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
         {
             //First step to protect this endpoint is to validate if the passed object addRegionRequest is correct or not
@@ -117,7 +118,7 @@ namespace WebAPIApp.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
-        [Authorize]
+        [Authorize(Roles ="writer")]
         public async Task<IActionResult> DeleteRegionAsync(Guid id)
         {
 
@@ -139,7 +140,7 @@ namespace WebAPIApp.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        [Authorize]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] Models.DTO.UpdateRegionRequest updateRegionRequest)
         {
             // Validate the incoming request

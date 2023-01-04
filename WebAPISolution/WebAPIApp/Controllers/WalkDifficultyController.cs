@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPIApp.Repositories;
 
@@ -18,6 +19,7 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetAllWalkDifficulty()
         {
             var walkDifficultyList = await walkDifficultyRepository.GetAllAsync();
@@ -27,6 +29,7 @@ namespace WebAPIApp.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetWalkDifficulty")]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetWalkDifficulty([FromRoute] Guid id)
         {
             var walkDifficultyDomain = await walkDifficultyRepository.GetAsync(id);
@@ -44,6 +47,7 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddWalkDifficulty(Models.DTO.AddWalkDifficultyRequest addWalkDifficultyRequest) 
         {
             //validate the incoming request
@@ -72,6 +76,7 @@ namespace WebAPIApp.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateWalkDifficulty([FromRoute] Guid id, [FromBody] Models.DTO.UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
             //validate the incoming request
@@ -107,6 +112,7 @@ namespace WebAPIApp.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> DeleteWalkDifficulty([FromRoute] Guid id) 
         {
             // Call the repository to Delete the WalkDifficulty
