@@ -47,10 +47,10 @@ namespace WebAPIApp.Controllers
         public async Task<IActionResult> AddWalkDifficulty(Models.DTO.AddWalkDifficultyRequest addWalkDifficultyRequest) 
         {
             //validate the incoming request
-            if (!ValidateAddWalkDifficultyAsync(addWalkDifficultyRequest))
+           /* if (!ValidateAddWalkDifficultyAsync(addWalkDifficultyRequest))
             {
                 return BadRequest(ModelState);
-            }
+            }*/
             //convert from DTO model to domain model
             var walkDifficultyDomain = new Models.Domain.WalkDifficulty
             {
@@ -75,10 +75,10 @@ namespace WebAPIApp.Controllers
         public async Task<IActionResult> UpdateWalkDifficulty([FromRoute] Guid id, [FromBody] Models.DTO.UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
             //validate the incoming request
-            if(!ValidateUpdateWalkDifficultyAsync(updateWalkDifficultyRequest))
+           /* if(!ValidateUpdateWalkDifficultyAsync(updateWalkDifficultyRequest))
             {
                 return BadRequest(ModelState);
-            }
+            }*/
             //convert from DTO to Domain
             var exisityWalkDifficulty = new Models.Domain.WalkDifficulty
             {

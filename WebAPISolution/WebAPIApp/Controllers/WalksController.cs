@@ -154,7 +154,7 @@ namespace WebAPIApp.Controllers
         private async Task<bool> ValidateAddWalkAsync(Models.DTO.AddWalkRequest addWalkRequest)
         {
 
-            if (addWalkRequest == null)
+           /* if (addWalkRequest == null)
             {
                 ModelState.AddModelError(nameof(addWalkRequest), "Add Walk data is required.");
                 return false;
@@ -168,7 +168,7 @@ namespace WebAPIApp.Controllers
             if (addWalkRequest.Length <=0 )
             {
                 ModelState.AddModelError(nameof(addWalkRequest.Length), $"{nameof(addWalkRequest.Length)} should be greater than Zero.");
-            }
+            }*/
 
             var region = await regionRepository.GetAsync(addWalkRequest.RegionId);
 
@@ -193,7 +193,7 @@ namespace WebAPIApp.Controllers
         }
         private async Task<bool> ValidateUpdateWalkAsync(Models.DTO.UpdateWalkRequest updateWalkRequest)
         {
-            if (updateWalkRequest == null)
+            /*if (updateWalkRequest == null)
             {
                 ModelState.AddModelError(nameof(updateWalkRequest), "Update Walk data is required.");
                 return false;
@@ -208,7 +208,7 @@ namespace WebAPIApp.Controllers
             {
                 ModelState.AddModelError(nameof(updateWalkRequest.Length), $"{nameof(updateWalkRequest.Length)} should be greater than Zero.");
             }
-
+*/
             var region = await regionRepository.GetAsync(updateWalkRequest.RegionId);
 
             if (region == null)

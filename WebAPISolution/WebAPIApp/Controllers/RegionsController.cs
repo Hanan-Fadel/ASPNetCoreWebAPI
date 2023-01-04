@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPIApp.Models.Domain;
 using WebAPIApp.Models.DTO;
@@ -8,6 +9,7 @@ namespace WebAPIApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class RegionsController : Controller
     {
         private readonly IRegionRepository regionRepository;
@@ -21,6 +23,7 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllRegionsAsync()
         {
             //use the private field to get all the regions from the database
@@ -65,16 +68,17 @@ namespace WebAPIApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddRegionAsync(Models.DTO.AddRegionRequest addRegionRequest)
         {
             //First step to protect this endpoint is to validate if the passed object addRegionRequest is correct or not
             
             //Validate the request
-            if (!ValidateAddRegionAsync(addRegionRequest))
+           /* if (!ValidateAddRegionAsync(addRegionRequest))
             {
                 //We need to send the ModelState message back inside this BadRequest
                 return BadRequest(ModelState);
-            }
+            }*/
 
             //conver DTO request to domain model as we need to add resource to database
             var region = new Models.Domain.Region()
@@ -113,6 +117,7 @@ namespace WebAPIApp.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> DeleteRegionAsync(Guid id)
         {
 
@@ -134,14 +139,15 @@ namespace WebAPIApp.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] Models.DTO.UpdateRegionRequest updateRegionRequest)
         {
             // Validate the incoming request
-            if (!ValidateUpdateRegionAsync(updateRegionRequest)) 
+            /*if (!ValidateUpdateRegionAsync(updateRegionRequest)) 
             {
                 return BadRequest(ModelState);
 
-            }
+            }*/
 
             //Convert the DTO to Domain Model
             var region = new Models.Domain.Region()
